@@ -1,18 +1,33 @@
-Start testing: Sep 02 12:26 Œrodkowoeuropejski czas letni
+Start testing: Sep 02 12:41 Œrodkowoeuropejski czas letni
 ----------------------------------------------------------
-1/1 Testing: smoke_test
-1/1 Test: smoke_test
+1/2 Testing: smoke_test
+1/2 Test: smoke_test
 Command: "A:/JobProcessingSystem/build/Debug/smoke_test.exe"
 Directory: A:/JobProcessingSystem/build
-"smoke_test" start time: Sep 02 12:26 Œrodkowoeuropejski czas letni
+"smoke_test" start time: Sep 02 12:41 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.03 sec
+Test time =   0.02 sec
 ----------------------------------------------------------
 Test Passed.
-"smoke_test" end time: Sep 02 12:26 Œrodkowoeuropejski czas letni
+"smoke_test" end time: Sep 02 12:41 Œrodkowoeuropejski czas letni
 "smoke_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Sep 02 12:26 Œrodkowoeuropejski czas letni
+2/2 Testing: job_test
+2/2 Test: job_test
+Command: "A:/JobProcessingSystem/build/Debug/job_test.exe"
+Directory: A:/JobProcessingSystem/build
+"job_test" start time: Sep 02 12:41 Œrodkowoeuropejski czas letni
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"job_test" end time: Sep 02 12:41 Œrodkowoeuropejski czas letni
+"job_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 02 12:41 Œrodkowoeuropejski czas letni

@@ -1,2 +1,3 @@
-smoke_test 1 0.0315645
+smoke_test 2 0.0115282
+job_test 1 0.023368
 ---

@@ -8,6 +8,9 @@
       <FullPath>A:\JobProcessingSystem\build\Debug\job_system.exe</FullPath>
     </ProjectOutput>
     <ProjectOutput>
+      <FullPath>A:\JobProcessingSystem\build\Debug\job_test.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
       <FullPath>A:\JobProcessingSystem\build\Debug\smoke_test.exe</FullPath>
     </ProjectOutput>
     <ProjectOutput>
