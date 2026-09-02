@@ -1,0 +1,10 @@
+^A:\JOBPROCESSINGSYSTEM\BUILD\CMAKEFILES\0B16EFAF8FE90E9BAF83123310118E68\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SA:/JobProcessingSystem -BA:/JobProcessingSystem/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file A:/JobProcessingSystem/build/JobProcessingSystem.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"A:/JobProcessingSystem/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
