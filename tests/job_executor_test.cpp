@@ -61,5 +61,51 @@ int main()
     assert(sleepJob.status() == JobStatus::Completed);
     assert(sleepJob.result().has_value());
     assert(sleepJob.result().value() == "Sleep completed");
+
+
+
+    Job completedJob(
+    5,
+    JobType::CalculateSum,
+    JobPriority::Normal,
+    5
+    );
+
+    executor.execute(completedJob);
+
+    assert(completedJob.status() == JobStatus::Completed);
+    assert(completedJob.result().has_value());
+    assert(completedJob.result().value() == "15");
+
+
+    executor.execute(completedJob);
+
+    assert(completedJob.status() == JobStatus::Completed);
+    assert(completedJob.result().value() == "15");
     return 0;
+
+
+    Job invalidSleepJob(
+    6,
+    JobType::Sleep,
+    JobPriority::Low,
+    -10
+    );
+
+    executor.execute(invalidSleepJob);
+
+    assert(invalidSleepJob.status() == JobStatus::Failed);
+    assert(invalidSleepJob.error().has_value());
+
+    Job invalidPrimesJob(
+    7,
+    JobType::CountPrimes,
+    JobPriority::Normal,
+    -5
+    );
+
+    executor.execute(invalidPrimesJob);
+
+    assert(invalidPrimesJob.status() == JobStatus::Failed);
+    assert(invalidPrimesJob.error().has_value());
 }

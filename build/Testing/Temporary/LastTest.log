@@ -1,17 +1,17 @@
-Start testing: Sep 09 12:14 Œrodkowoeuropejski czas letni
+Start testing: Sep 09 12:21 Œrodkowoeuropejski czas letni
 ----------------------------------------------------------
 1/3 Testing: smoke_test
 1/3 Test: smoke_test
 Command: "A:/JobProcessingSystem/build/Debug/smoke_test.exe"
 Directory: A:/JobProcessingSystem/build
-"smoke_test" start time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"smoke_test" start time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.02 sec
 ----------------------------------------------------------
 Test Passed.
-"smoke_test" end time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"smoke_test" end time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 "smoke_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -19,14 +19,14 @@ Test Passed.
 2/3 Test: job_test
 Command: "A:/JobProcessingSystem/build/Debug/job_test.exe"
 Directory: A:/JobProcessingSystem/build
-"job_test" start time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"job_test" start time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.02 sec
 ----------------------------------------------------------
 Test Passed.
-"job_test" end time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"job_test" end time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 "job_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -34,15 +34,15 @@ Test Passed.
 3/3 Test: job_executor_test
 Command: "A:/JobProcessingSystem/build/Debug/job_executor_test.exe"
 Directory: A:/JobProcessingSystem/build
-"job_executor_test" start time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"job_executor_test" start time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.04 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"job_executor_test" end time: Sep 09 12:14 Œrodkowoeuropejski czas letni
+"job_executor_test" end time: Sep 09 12:21 Œrodkowoeuropejski czas letni
 "job_executor_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Sep 09 12:14 Œrodkowoeuropejski czas letni
+End testing: Sep 09 12:21 Œrodkowoeuropejski czas letni
