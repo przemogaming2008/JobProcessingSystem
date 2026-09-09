@@ -1,6 +1,6 @@
 #include "job_system/job.h"
-
 #include <cassert>
+#include <stdexcept>
 
 int main()
 {
@@ -52,5 +52,23 @@ int main()
     assert(!failedJob.setStatus(JobStatus::Running));
     assert(failedJob.status() == JobStatus::Failed);
 
+
+
+    bool exceptionThrown = false;
+
+    try
+    {
+        Job invalidJob(
+            0,
+            JobType::Sleep,
+            JobPriority::Low
+        );
+    }
+    catch (const std::invalid_argument&)
+    {
+        exceptionThrown = true;
+    }
+
+    assert(exceptionThrown);
     return 0;
 }

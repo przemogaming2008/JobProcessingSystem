@@ -1,5 +1,6 @@
 #include "job_system/job.h"
 #include <utility>
+#include <stdexcept>
 
 Job::Job(Id id, JobType type, JobPriority priority)
     : id_(id),
@@ -8,6 +9,10 @@ Job::Job(Id id, JobType type, JobPriority priority)
       priority_(priority),
       created_at_(std::chrono::system_clock::now())
 {
+    if (id == 0)
+    {
+        throw std::invalid_argument("Job ID cannot be zero");
+    }
 }
 
 Job::Id Job::id() const
