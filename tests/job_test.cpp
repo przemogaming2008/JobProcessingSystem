@@ -7,7 +7,8 @@ int main()
     Job job(
         1,
         JobType::CalculateSum,
-        JobPriority::High
+        JobPriority::High,
+        100
     );
 
     assert(job.id() == 1);
@@ -32,7 +33,8 @@ int main()
     Job failedJob(
         2,
         JobType::CountPrimes,
-        JobPriority::Normal
+        JobPriority::Normal,
+        100
     );
 
     assert(failedJob.status() == JobStatus::Queued);
@@ -61,7 +63,8 @@ int main()
         Job invalidJob(
             0,
             JobType::Sleep,
-            JobPriority::Low
+            JobPriority::Low,
+            100
         );
     }
     catch (const std::invalid_argument&)

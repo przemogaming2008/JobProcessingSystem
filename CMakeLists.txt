@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(job_system_lib
     src/job.cpp
+    src/job_executor.cpp
 )
 
 target_include_directories(job_system_lib
@@ -50,4 +51,18 @@ target_link_libraries(job_test
 add_test(
     NAME job_test
     COMMAND job_test
+)
+
+add_executable(job_executor_test
+    tests/job_executor_test.cpp
+)
+
+target_link_libraries(job_executor_test
+    PRIVATE
+        job_system_lib
+)
+
+add_test(
+    NAME job_executor_test
+    COMMAND job_executor_test
 )

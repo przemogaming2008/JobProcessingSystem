@@ -32,7 +32,12 @@ class Job
 public:
     using Id = std::uint64_t;
     
-    Job(Id id, JobType type, JobPriority priority);
+    Job(
+        Id id,
+        JobType type,
+        JobPriority priority,
+        std::int64_t input
+    );
 
     Id id() const;
     JobType type() const;
@@ -46,6 +51,8 @@ public:
 
     const std::optional<std::string>& result() const;
     const std::optional<std::string>& error() const;
+
+    std::int64_t input() const;
 private:
     Id id_;
     JobType type_;
@@ -55,4 +62,6 @@ private:
 
     std::optional<std::string> result_;
     std::optional<std::string> error_;
+
+    std::int64_t input_;
 };

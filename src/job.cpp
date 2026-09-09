@@ -2,12 +2,18 @@
 #include <utility>
 #include <stdexcept>
 
-Job::Job(Id id, JobType type, JobPriority priority)
+Job::Job(
+    Id id,
+    JobType type,
+    JobPriority priority,
+    std::int64_t input
+)
     : id_(id),
       type_(type),
       status_(JobStatus::Queued),
       priority_(priority),
-      created_at_(std::chrono::system_clock::now())
+      created_at_(std::chrono::system_clock::now()),
+      input_(input)
 {
     if (id == 0)
     {
@@ -96,4 +102,9 @@ const std::optional<std::string>& Job::result() const
 const std::optional<std::string>& Job::error() const
 {
     return error_;
+}
+
+std::int64_t Job::input() const
+{
+    return input_;
 }

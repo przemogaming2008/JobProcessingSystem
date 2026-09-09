@@ -1,3 +1,4 @@
-smoke_test 5 0.00337398
-job_test 4 0.0043643
+smoke_test 9 0.00192703
+job_test 8 0.00236102
+job_executor_test 2 0.01935
 ---
