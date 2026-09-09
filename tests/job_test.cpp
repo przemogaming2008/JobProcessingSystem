@@ -15,15 +15,19 @@ int main()
     assert(job.status() == JobStatus::Queued);
     assert(job.priority() == JobPriority::High);
 
-    job.setStatus(JobStatus::Running);
+    assert(job.setStatus(JobStatus::Running));
     assert(job.status() == JobStatus::Running);
 
     job.setResult("42");
     assert(job.result().has_value());
     assert(job.result().value() == "42");
 
-    job.setStatus(JobStatus::Completed);
+    assert(job.setStatus(JobStatus::Completed));
     assert(job.status() == JobStatus::Completed);
+
+    assert(!job.setStatus(JobStatus::Running));
+    assert(job.status() == JobStatus::Completed);
+
 
     Job failedJob(
         2,
@@ -31,11 +35,21 @@ int main()
         JobPriority::Normal
     );
 
+    assert(failedJob.status() == JobStatus::Queued);
+
+    assert(failedJob.setStatus(JobStatus::Running));
+    assert(failedJob.status() == JobStatus::Running);
+
     failedJob.setError("Invalid input");
-    failedJob.setStatus(JobStatus::Failed);
 
     assert(failedJob.error().has_value());
     assert(failedJob.error().value() == "Invalid input");
+
+    assert(failedJob.setStatus(JobStatus::Failed));
+    assert(failedJob.status() == JobStatus::Failed);
+
+    assert(!failedJob.setStatus(JobStatus::Completed));
+    assert(!failedJob.setStatus(JobStatus::Running));
     assert(failedJob.status() == JobStatus::Failed);
 
     return 0;

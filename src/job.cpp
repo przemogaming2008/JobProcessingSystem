@@ -35,9 +35,42 @@ std::chrono::system_clock::time_point Job::createdAt() const
     return created_at_;
 }
 
-void Job::setStatus(JobStatus status)
+bool Job::setStatus(JobStatus newStatus)
 {
-    status_ = status;
+    bool allowed = false;
+
+    switch (status_)
+    {
+        case JobStatus::Queued:
+            allowed =
+                newStatus == JobStatus::Running ||
+                newStatus == JobStatus::Cancelled ||
+                newStatus == JobStatus::TimedOut;
+            break;
+
+        case JobStatus::Running:
+            allowed =
+                newStatus == JobStatus::Completed ||
+                newStatus == JobStatus::Failed ||
+                newStatus == JobStatus::Cancelled ||
+                newStatus == JobStatus::TimedOut;
+            break;
+
+        case JobStatus::Completed:
+        case JobStatus::Failed:
+        case JobStatus::Cancelled:
+        case JobStatus::TimedOut:
+            allowed = false;
+            break;
+    }
+
+    if (!allowed)
+    {
+        return false;
+    }
+
+    status_ = newStatus;
+    return true;
 }
 
 void Job::setResult(std::string result)

@@ -40,7 +40,7 @@ public:
     JobPriority priority() const;
     std::chrono::system_clock::time_point createdAt() const;
 
-    void setStatus(JobStatus status);
+    bool setStatus(JobStatus status);
     void setResult(std::string result);
     void setError(std::string error);
 
