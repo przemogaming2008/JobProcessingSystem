@@ -12,6 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(job_system_lib
     src/job.cpp
     src/job_executor.cpp
+    src/worker.cpp
 )
 
 target_include_directories(job_system_lib
@@ -79,4 +80,18 @@ target_link_libraries(thread_safe_queue_test
 add_test(
     NAME thread_safe_queue_test
     COMMAND thread_safe_queue_test
+)
+
+add_executable(worker_test
+    tests/worker_test.cpp
+)
+
+target_link_libraries(worker_test
+    PRIVATE
+        job_system_lib
+)
+
+add_test(
+    NAME worker_test
+    COMMAND worker_test
 )
