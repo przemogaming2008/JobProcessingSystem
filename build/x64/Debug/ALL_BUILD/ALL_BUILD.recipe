@@ -17,6 +17,9 @@
       <FullPath>A:\JobProcessingSystem\build\Debug\smoke_test.exe</FullPath>
     </ProjectOutput>
     <ProjectOutput>
+      <FullPath>A:\JobProcessingSystem\build\Debug\thread_safe_queue_test.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
       <FullPath>A:\JobProcessingSystem\build\x64\Debug\ALL_BUILD</FullPath>
     </ProjectOutput>
   </ProjectOutputs>

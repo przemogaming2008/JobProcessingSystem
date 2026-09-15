@@ -66,3 +66,17 @@ add_test(
     NAME job_executor_test
     COMMAND job_executor_test
 )
+
+add_executable(thread_safe_queue_test
+    tests/thread_safe_queue_test.cpp
+)
+
+target_link_libraries(thread_safe_queue_test
+    PRIVATE
+        job_system_lib
+)
+
+add_test(
+    NAME thread_safe_queue_test
+    COMMAND thread_safe_queue_test
+)

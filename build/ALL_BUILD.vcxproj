@@ -194,6 +194,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{F6446847-7C15-33F1-A8D3-8DA914DE2043}</Project>
       <Name>smoke_test</Name>
     </ProjectReference>
+    <ProjectReference Include="A:\JobProcessingSystem\build\thread_safe_queue_test.vcxproj">
+      <Project>{3E12E5A6-CF58-355A-9CBB-976CF92961F4}</Project>
+      <Name>thread_safe_queue_test</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
