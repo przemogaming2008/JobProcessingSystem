@@ -4,19 +4,22 @@
 #include <mutex>
 #include <queue>
 #include <utility>
+#include <optional>
 
 template <typename T>
 class ThreadSafeQueue
 {
 public:
     void push(T value);
-    T waitAndPop();
+    std::optional<T> waitAndPop();
+    void close();
     bool empty() const;
 
 private:
     std::queue<T> queue_;
     mutable std::mutex mutex_;
     std::condition_variable condition_;
+    bool closed_ = false;
 };
 
 template <typename T>
@@ -38,7 +41,7 @@ void ThreadSafeQueue<T>::push(T value)
 }
 
 template <typename T>
-T ThreadSafeQueue<T>::waitAndPop()
+std::optional<T> ThreadSafeQueue<T>::waitAndPop()
 {
     std::unique_lock<std::mutex> lock(mutex_);
 
@@ -46,12 +49,28 @@ T ThreadSafeQueue<T>::waitAndPop()
         lock,
         [this]()
         {
-            return !queue_.empty();
+            return closed_ || !queue_.empty();
         }
     );
+
+    if (queue_.empty())
+    {
+        return std::nullopt;
+    }
 
     T value = std::move(queue_.front());
     queue_.pop();
 
     return value;
+}
+
+template <typename T>
+void ThreadSafeQueue<T>::close()
+{
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        closed_ = true;
+    }
+
+    condition_.notify_all();
 }

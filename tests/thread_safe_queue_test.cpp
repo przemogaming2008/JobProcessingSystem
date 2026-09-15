@@ -15,7 +15,10 @@ int main()
 
     assert(!queue.empty());
 
-    int value = queue.waitAndPop();
+    auto value = queue.waitAndPop();
+
+    assert(value.has_value());
+    assert(value.value() == 42);
 
     assert(value == 42);
     assert(queue.empty());
@@ -28,7 +31,10 @@ int main()
     std::thread worker(
         [&]()
         {
-            result = threadedQueue.waitAndPop();
+            auto value = threadedQueue.waitAndPop();
+
+            assert(value.has_value());
+            result = value.value();
         }
     );
 
@@ -64,7 +70,10 @@ int main()
                      j < totalItems / consumerCount;
                      ++j)
                 {
-                    sum += stressQueue.waitAndPop();
+                    auto value = stressQueue.waitAndPop();
+
+                    assert(value.has_value());
+                    sum += value.value();
                 }
             }
         );

@@ -19,6 +19,8 @@ int main()
         )
     );
 
+    queue.close();
+
     worker.join();
 
     assert(queue.empty());

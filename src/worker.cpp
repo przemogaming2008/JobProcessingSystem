@@ -17,10 +17,18 @@ void Worker::start()
 
 void Worker::run()
 {
-    Job job = queue_.waitAndPop();
-    executor_.execute(job);
-}
+    while (true)
+    {
+        auto job = queue_.waitAndPop();
 
+        if (!job.has_value())
+        {
+            break;
+        }
+
+        executor_.execute(job.value());
+    }
+}
 void Worker::join()
 {
     if (thread_.joinable())
