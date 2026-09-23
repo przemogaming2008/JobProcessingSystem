@@ -1,78 +1,93 @@
-Start testing: Sep 15 12:33 Œrodkowoeuropejski czas letni
+Start testing: Sep 23 12:00 Œrodkowoeuropejski czas letni
 ----------------------------------------------------------
-1/5 Testing: smoke_test
-1/5 Test: smoke_test
+1/6 Testing: smoke_test
+1/6 Test: smoke_test
 Command: "A:/JobProcessingSystem/build/Debug/smoke_test.exe"
 Directory: A:/JobProcessingSystem/build
-"smoke_test" start time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"smoke_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.02 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"smoke_test" end time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"smoke_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 "smoke_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/5 Testing: job_test
-2/5 Test: job_test
+2/6 Testing: job_test
+2/6 Test: job_test
 Command: "A:/JobProcessingSystem/build/Debug/job_test.exe"
 Directory: A:/JobProcessingSystem/build
-"job_test" start time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"job_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.02 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"job_test" end time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"job_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 "job_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/5 Testing: job_executor_test
-3/5 Test: job_executor_test
+3/6 Testing: job_executor_test
+3/6 Test: job_executor_test
 Command: "A:/JobProcessingSystem/build/Debug/job_executor_test.exe"
 Directory: A:/JobProcessingSystem/build
-"job_executor_test" start time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"job_executor_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.04 sec
 ----------------------------------------------------------
 Test Passed.
-"job_executor_test" end time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"job_executor_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 "job_executor_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/5 Testing: thread_safe_queue_test
-4/5 Test: thread_safe_queue_test
+4/6 Testing: thread_safe_queue_test
+4/6 Test: thread_safe_queue_test
 Command: "A:/JobProcessingSystem/build/Debug/thread_safe_queue_test.exe"
 Directory: A:/JobProcessingSystem/build
-"thread_safe_queue_test" start time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"thread_safe_queue_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.02 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"thread_safe_queue_test" end time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"thread_safe_queue_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 "thread_safe_queue_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-5/5 Testing: worker_test
-5/5 Test: worker_test
+5/6 Testing: worker_test
+5/6 Test: worker_test
 Command: "A:/JobProcessingSystem/build/Debug/worker_test.exe"
 Directory: A:/JobProcessingSystem/build
-"worker_test" start time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"worker_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.02 sec
 ----------------------------------------------------------
 Test Passed.
-"worker_test" end time: Sep 15 12:33 Œrodkowoeuropejski czas letni
+"worker_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
 "worker_test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Sep 15 12:33 Œrodkowoeuropejski czas letni
+6/6 Testing: worker_pool_test
+6/6 Test: worker_pool_test
+Command: "A:/JobProcessingSystem/build/Debug/worker_pool_test.exe"
+Directory: A:/JobProcessingSystem/build
+"worker_pool_test" start time: Sep 23 12:00 Œrodkowoeuropejski czas letni
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"worker_pool_test" end time: Sep 23 12:00 Œrodkowoeuropejski czas letni
+"worker_pool_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 23 12:00 Œrodkowoeuropejski czas letni

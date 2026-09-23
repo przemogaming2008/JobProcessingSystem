@@ -198,6 +198,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{3E12E5A6-CF58-355A-9CBB-976CF92961F4}</Project>
       <Name>thread_safe_queue_test</Name>
     </ProjectReference>
+    <ProjectReference Include="A:\JobProcessingSystem\build\worker_pool_test.vcxproj">
+      <Project>{4EE490CE-37F2-343A-B42E-AC9F69048455}</Project>
+      <Name>worker_pool_test</Name>
+    </ProjectReference>
     <ProjectReference Include="A:\JobProcessingSystem\build\worker_test.vcxproj">
       <Project>{90E7374A-0546-32C6-874C-7E0A4B6CE581}</Project>
       <Name>worker_test</Name>
