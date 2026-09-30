@@ -178,6 +178,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{E2001075-6917-3E5F-BE7A-C4E25B1BDEC5}</Project>
       <Name>job_executor_test</Name>
     </ProjectReference>
+    <ProjectReference Include="A:\JobProcessingSystem\build\job_manager_test.vcxproj">
+      <Project>{FDB50917-E338-30AC-8B2A-1CE883F650AE}</Project>
+      <Name>job_manager_test</Name>
+    </ProjectReference>
     <ProjectReference Include="A:\JobProcessingSystem\build\job_system.vcxproj">
       <Project>{3E77713F-ECBB-30FC-B0FE-744AFF167F32}</Project>
       <Name>job_system</Name>
