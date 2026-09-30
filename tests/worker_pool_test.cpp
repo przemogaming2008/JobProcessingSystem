@@ -52,5 +52,36 @@ int main()
 
     assert(exceptionThrown);
     
+    {
+        WorkerPool pool(2);
+
+        pool.start();
+
+        pool.submit(
+            Job(
+                100,
+                JobType::Sleep,
+                JobPriority::Normal,
+                100
+            )
+        );
+
+        pool.submit(
+            Job(
+                101,
+                JobType::Sleep,
+                JobPriority::Normal,
+                100
+            )
+        );
+
+    }
+
+    {
+        WorkerPool pool(2);
+
+
+    }
+
     return 0;
 }

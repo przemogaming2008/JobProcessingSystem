@@ -13,6 +13,7 @@ class WorkerPool
 {
 public:
     explicit WorkerPool(std::size_t workerCount);
+    ~WorkerPool();
 
     void start();
     bool submit(std::shared_ptr<Job> job);

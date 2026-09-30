@@ -43,6 +43,11 @@ WorkerPool::WorkerPool(std::size_t workerCount)
     }
 }
 
+WorkerPool::~WorkerPool()
+{
+    stop();
+}
+
 void WorkerPool::start()
 {
     for (auto& worker : workers_)
