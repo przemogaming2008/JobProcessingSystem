@@ -1,17 +1,18 @@
 #include "job_system/worker.h"
 
 #include <cassert>
+#include <memory>
 
 int main()
 {
-    ThreadSafeQueue<Job> queue;
+    ThreadSafeQueue<std::shared_ptr<Job>> queue;
 
     Worker worker(queue);
 
     worker.start();
 
     queue.push(
-        Job(
+        std::make_shared<Job>(
             1,
             JobType::CalculateSum,
             JobPriority::Normal,

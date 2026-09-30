@@ -5,6 +5,10 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <memory>
+#include <unordered_map>
+#include <optional>
+#include <string>
 
 class JobManager
 {
@@ -20,7 +24,14 @@ public:
     void start();
     void stop();
 
+    JobStatus status(Job::Id id) const;
+
+    std::optional<std::string> result(Job::Id id) const;
+    std::optional<std::string> error(Job::Id id) const;
+
 private:
     WorkerPool workerPool_;
     Job::Id nextId_ = 1;
+    std::unordered_map<Job::Id, std::shared_ptr<Job>> jobs_;
+
 };

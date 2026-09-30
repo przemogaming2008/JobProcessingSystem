@@ -1,6 +1,8 @@
 #include "job_system/worker.h"
 
-Worker::Worker(ThreadSafeQueue<Job>& queue)
+Worker::Worker(
+    ThreadSafeQueue<std::shared_ptr<Job>>& queue
+)
     : queue_(queue)
 {
 }
@@ -26,7 +28,7 @@ void Worker::run()
             break;
         }
 
-        executor_.execute(job.value());
+        executor_.execute(*job.value());
     }
 }
 void Worker::join()

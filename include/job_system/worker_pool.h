@@ -14,10 +14,10 @@ public:
     explicit WorkerPool(std::size_t workerCount);
 
     void start();
-    void submit(Job job);
+    void submit(std::shared_ptr<Job> job);
     void stop();
 
 private:
-    ThreadSafeQueue<Job> queue_;
+    ThreadSafeQueue<std::shared_ptr<Job>> queue_;
     std::vector<std::unique_ptr<Worker>> workers_;
 };

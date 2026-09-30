@@ -29,7 +29,7 @@ void WorkerPool::start()
     }
 }
 
-void WorkerPool::submit(Job job)
+void WorkerPool::submit(std::shared_ptr<Job> job)
 {
     queue_.push(std::move(job));
 }

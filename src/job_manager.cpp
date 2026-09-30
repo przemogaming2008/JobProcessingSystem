@@ -1,5 +1,7 @@
 #include "job_system/job_manager.h"
 
+#include <stdexcept>
+
 JobManager::JobManager(std::size_t workerCount)
     : workerPool_(workerCount)
 {
@@ -13,14 +15,16 @@ Job::Id JobManager::submit(
 {
     const Job::Id id = nextId_++;
 
-    workerPool_.submit(
-        Job(
-            id,
-            type,
-            priority,
-            input
-        )
+    auto job = std::make_shared<Job>(
+        id,
+        type,
+        priority,
+        input
     );
+
+    jobs_.emplace(id, job);
+
+    workerPool_.submit(job);
 
     return id;
 }
@@ -33,4 +37,40 @@ void JobManager::start()
 void JobManager::stop()
 {
     workerPool_.stop();
+}
+
+JobStatus JobManager::status(Job::Id id) const
+{
+    const auto it = jobs_.find(id);
+
+    if (it == jobs_.end())
+    {
+        throw std::out_of_range("Job not found");
+    }
+
+    return it->second->status();
+}
+
+std::optional<std::string> JobManager::result(Job::Id id) const
+{
+    const auto it = jobs_.find(id);
+
+    if (it == jobs_.end())
+    {
+        throw std::out_of_range("Job not found");
+    }
+
+    return it->second->result();
+}
+
+std::optional<std::string> JobManager::error(Job::Id id) const
+{
+    const auto it = jobs_.find(id);
+
+    if (it == jobs_.end())
+    {
+        throw std::out_of_range("Job not found");
+    }
+
+    return it->second->error();
 }

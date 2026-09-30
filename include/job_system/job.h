@@ -4,6 +4,7 @@
 #include <chrono>
 #include <optional>
 #include <string>
+#include <mutex>
 
 enum class JobType
 {
@@ -51,8 +52,8 @@ public:
     void setResult(std::string result);
     void setError(std::string error);
 
-    const std::optional<std::string>& result() const;
-    const std::optional<std::string>& error() const;
+    std::optional<std::string> result() const;
+    std::optional<std::string> error() const;
 
     std::int64_t input() const;
 private:
@@ -66,4 +67,7 @@ private:
     std::optional<std::string> error_;
 
     std::int64_t input_;
+
+    mutable std::mutex mutex_;
+    
 };

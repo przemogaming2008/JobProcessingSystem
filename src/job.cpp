@@ -33,12 +33,18 @@ JobType Job::type() const
 
 JobStatus Job::status() const
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     return status_;
 }
 
 JobPriority Job::priority() const
 {
     return priority_;
+}
+
+std::int64_t Job::input() const
+{
+    return input_;
 }
 
 std::chrono::system_clock::time_point Job::createdAt() const
@@ -48,6 +54,8 @@ std::chrono::system_clock::time_point Job::createdAt() const
 
 bool Job::setStatus(JobStatus newStatus)
 {
+    std::lock_guard<std::mutex> lock(mutex_);
+
     bool allowed = false;
 
     switch (status_)
@@ -86,25 +94,24 @@ bool Job::setStatus(JobStatus newStatus)
 
 void Job::setResult(std::string result)
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     result_ = std::move(result);
 }
 
 void Job::setError(std::string error)
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     error_ = std::move(error);
 }
 
-const std::optional<std::string>& Job::result() const
+std::optional<std::string> Job::result() const
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     return result_;
 }
 
-const std::optional<std::string>& Job::error() const
+std::optional<std::string> Job::error() const
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     return error_;
-}
-
-std::int64_t Job::input() const
-{
-    return input_;
 }

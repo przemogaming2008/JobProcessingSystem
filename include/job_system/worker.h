@@ -5,11 +5,14 @@
 #include "job_system/thread_safe_queue.h"
 
 #include <thread>
+#include <memory>
 
 class Worker
 {
 public:
-    explicit Worker(ThreadSafeQueue<Job>& queue);
+    explicit Worker(
+        ThreadSafeQueue<std::shared_ptr<Job>>& queue
+    );
 
     void start();
     void join();
@@ -17,7 +20,7 @@ public:
 private:
     void run();
 
-    ThreadSafeQueue<Job>& queue_;
+    ThreadSafeQueue<std::shared_ptr<Job>>& queue_;
     JobExecutor executor_;
     std::thread thread_;
 };
