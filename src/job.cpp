@@ -108,3 +108,28 @@ std::int64_t Job::input() const
 {
     return input_;
 }
+
+bool Job::requestCancel()
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (status_ == JobStatus::Queued)
+    {
+        status_ = JobStatus::Cancelled;
+        return true;
+    }
+
+    if (status_ == JobStatus::Running)
+    {
+        cancelRequested_ = true;
+        return true;
+    }
+
+    return false;
+}
+
+bool Job::cancelRequested() const
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+    return cancelRequested_;
+}
