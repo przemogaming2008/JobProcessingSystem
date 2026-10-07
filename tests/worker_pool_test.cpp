@@ -3,6 +3,7 @@
 #include <cassert>
 #include <chrono>
 #include <stdexcept>
+#include <memory>
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
     for (Job::Id id = 1; id <= 4; ++id)
     {
         pool.submit(
-            Job(
+            std::make_shared<Job>(
                 id,
                 JobType::Sleep,
                 JobPriority::Normal,

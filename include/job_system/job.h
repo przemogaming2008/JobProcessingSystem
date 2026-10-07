@@ -52,8 +52,8 @@ public:
     void setResult(std::string result);
     void setError(std::string error);
 
-    const std::optional<std::string>& result() const;
-    const std::optional<std::string>& error() const;
+    std::optional<std::string> result() const;
+    std::optional<std::string> error() const;
 
     std::int64_t input() const;
 
@@ -73,4 +73,5 @@ private:
 
     mutable std::mutex mutex_;
     bool cancelRequested_ = false;
+
 };

@@ -28,13 +28,27 @@ void JobExecutor::execute(Job& job)
 
             for (std::int64_t i = 1; i <= n; ++i)
             {
+                if (job.cancelRequested())
+                {
+                    job.setStatus(JobStatus::Cancelled);
+                    return;
+                }
+
                 sum += i;
+            }
+
+            // Cancel mógł przyjść dokładnie po zakończeniu pętli
+            if (job.cancelRequested())
+            {
+                job.setStatus(JobStatus::Cancelled);
+                return;
             }
 
             job.setResult(std::to_string(sum));
             job.setStatus(JobStatus::Completed);
             break;
         }
+
         case JobType::Sleep:
         {
             const auto milliseconds = job.input();
@@ -46,9 +60,31 @@ void JobExecutor::execute(Job& job)
                 return;
             }
 
-            std::this_thread::sleep_for(
-                std::chrono::milliseconds(milliseconds)
-            );
+            std::int64_t remaining = milliseconds;
+
+            while (remaining > 0)
+            {
+                if (job.cancelRequested())
+                {
+                    job.setStatus(JobStatus::Cancelled);
+                    return;
+                }
+
+                const std::int64_t sleepTime =
+                    remaining > 10 ? 10 : remaining;
+
+                std::this_thread::sleep_for(
+                    std::chrono::milliseconds(sleepTime)
+                );
+
+                remaining -= sleepTime;
+            }
+
+            if (job.cancelRequested())
+            {
+                job.setStatus(JobStatus::Cancelled);
+                return;
+            }
 
             job.setResult("Sleep completed");
             job.setStatus(JobStatus::Completed);
@@ -70,6 +106,12 @@ void JobExecutor::execute(Job& job)
 
             for (std::int64_t number = 2; number <= n; ++number)
             {
+                if (job.cancelRequested())
+                {
+                    job.setStatus(JobStatus::Cancelled);
+                    return;
+                }
+
                 bool isPrime = true;
 
                 for (std::int64_t divisor = 2;
@@ -87,6 +129,12 @@ void JobExecutor::execute(Job& job)
                 {
                     ++count;
                 }
+            }
+
+            if (job.cancelRequested())
+            {
+                job.setStatus(JobStatus::Cancelled);
+                return;
             }
 
             job.setResult(std::to_string(count));
