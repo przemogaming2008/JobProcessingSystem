@@ -1,9 +1,11 @@
 #include "job_system/thread_safe_queue.h"
+#include "job_system/job.h"
 
 #include <atomic>
 #include <cassert>
 #include <thread>
 #include <vector>
+#include <memory>
 
 int main()
 {
@@ -116,5 +118,62 @@ int main()
 
     assert(sum == 500500);
 
+
+    {
+        ThreadSafeQueue<std::shared_ptr<Job>> queue(
+            [](const std::shared_ptr<Job>& job)
+            {
+                if (job->priority() == JobPriority::High)
+                {
+                    return 2;
+                }
+
+                if (job->priority() == JobPriority::Low)
+                {
+                    return 0;
+                }
+
+                return 1;
+            }
+        );
+
+        queue.push(std::make_shared<Job>(
+            1,
+            JobType::Sleep,
+            JobPriority::Low,
+            1
+        ));
+
+        queue.push(std::make_shared<Job>(
+            2,
+            JobType::Sleep,
+            JobPriority::High,
+            1
+        ));
+
+        queue.push(std::make_shared<Job>(
+            3,
+            JobType::Sleep,
+            JobPriority::High,
+            1
+        ));
+
+        queue.push(std::make_shared<Job>(
+            4,
+            JobType::Sleep,
+            JobPriority::Normal,
+            1
+        ));
+
+        auto first = queue.waitAndPop();
+        auto second = queue.waitAndPop();
+        auto third = queue.waitAndPop();
+        auto fourth = queue.waitAndPop();
+
+        assert(first.value()->id() == 2);
+        assert(second.value()->id() == 3);
+        assert(third.value()->id() == 4);
+        assert(fourth.value()->id() == 1);
+    }
     return 0;
 }

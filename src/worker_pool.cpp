@@ -3,6 +3,22 @@
 #include <stdexcept>
 
 WorkerPool::WorkerPool(std::size_t workerCount)
+    : queue_(
+        [](const std::shared_ptr<Job>& job)
+        {
+            if (job->priority() == JobPriority::High)
+            {
+                return 2;
+            }
+
+            if (job->priority() == JobPriority::Low)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+    )
 {
     if (workerCount == 0)
     {
@@ -29,7 +45,7 @@ void WorkerPool::start()
     }
 }
 
-void WorkerPool::submit(Job job)
+void WorkerPool::submit(std::shared_ptr<Job> job)
 {
     queue_.push(std::move(job));
 }
