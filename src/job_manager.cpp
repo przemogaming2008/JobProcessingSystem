@@ -10,7 +10,8 @@ JobManager::JobManager(std::size_t workerCount)
 Job::Id JobManager::submit(
     JobType type,
     JobPriority priority,
-    std::int64_t input
+    std::int64_t input,
+    std::optional<std::chrono::milliseconds> timeout
 )
 {
     const Job::Id id = nextId_++;
@@ -22,8 +23,12 @@ Job::Id JobManager::submit(
         input
     );
 
-    jobs_.emplace(id, job);
+    if (timeout.has_value())
+    {
+        job->setTimeout(timeout.value());
+    }
 
+    jobs_.emplace(id, job);
     workerPool_.submit(job);
 
     return id;

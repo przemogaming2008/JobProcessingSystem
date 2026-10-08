@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <optional>
 #include <string>
+#include <chrono>
 
 class JobManager
 {
@@ -18,7 +19,8 @@ public:
     Job::Id submit(
         JobType type,
         JobPriority priority,
-        std::int64_t input
+        std::int64_t input,
+        std::optional<std::chrono::milliseconds> timeout = std::nullopt
     );
 
     void start();

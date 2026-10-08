@@ -152,5 +152,23 @@ int main()
         assert(manager.status(id) == JobStatus::Cancelled);
     }
 
+
+    {
+        JobManager manager(1);
+
+        manager.start();
+
+        const auto id = manager.submit(
+            JobType::Sleep,
+            JobPriority::Normal,
+            500,
+            std::chrono::milliseconds(50)
+        );
+
+        manager.stop();
+
+        assert(manager.status(id) == JobStatus::TimedOut);
+        assert(!manager.result(id).has_value());
+    }
     return 0;
 }

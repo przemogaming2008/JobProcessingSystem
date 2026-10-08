@@ -59,6 +59,9 @@ public:
 
     bool requestCancel();
     bool cancelRequested() const;
+
+    void setTimeout(std::chrono::milliseconds timeout);
+    bool timedOut() const;
 private:
     Id id_;
     JobType type_;
@@ -73,5 +76,8 @@ private:
 
     mutable std::mutex mutex_;
     bool cancelRequested_ = false;
+
+    std::optional<std::chrono::milliseconds> timeout_;
+    std::optional<std::chrono::steady_clock::time_point> startedAt_;
 
 };

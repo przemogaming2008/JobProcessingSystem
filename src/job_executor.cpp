@@ -33,6 +33,11 @@ void JobExecutor::execute(Job& job)
                     job.setStatus(JobStatus::Cancelled);
                     return;
                 }
+                if (job.timedOut())
+                {
+                    job.setStatus(JobStatus::TimedOut);
+                    return;
+                }
 
                 sum += i;
             }
@@ -41,6 +46,11 @@ void JobExecutor::execute(Job& job)
             if (job.cancelRequested())
             {
                 job.setStatus(JobStatus::Cancelled);
+                return;
+            }
+            if (job.timedOut())
+            {
+                job.setStatus(JobStatus::TimedOut);
                 return;
             }
 
@@ -69,7 +79,11 @@ void JobExecutor::execute(Job& job)
                     job.setStatus(JobStatus::Cancelled);
                     return;
                 }
-
+                if (job.timedOut())
+                {
+                    job.setStatus(JobStatus::TimedOut);
+                    return;
+                }
                 const std::int64_t sleepTime =
                     remaining > 10 ? 10 : remaining;
 
@@ -83,6 +97,11 @@ void JobExecutor::execute(Job& job)
             if (job.cancelRequested())
             {
                 job.setStatus(JobStatus::Cancelled);
+                return;
+            }
+            if (job.timedOut())
+            {
+                job.setStatus(JobStatus::TimedOut);
                 return;
             }
 
@@ -111,6 +130,11 @@ void JobExecutor::execute(Job& job)
                     job.setStatus(JobStatus::Cancelled);
                     return;
                 }
+                if (job.timedOut())
+                {
+                    job.setStatus(JobStatus::TimedOut);
+                    return;
+                }
 
                 bool isPrime = true;
 
@@ -134,6 +158,11 @@ void JobExecutor::execute(Job& job)
             if (job.cancelRequested())
             {
                 job.setStatus(JobStatus::Cancelled);
+                return;
+            }
+            if (job.timedOut())
+            {
+                job.setStatus(JobStatus::TimedOut);
                 return;
             }
 

@@ -83,6 +83,10 @@ bool Job::setStatus(JobStatus newStatus)
         return false;
     }
 
+    if (newStatus == JobStatus::Running)
+    {
+        startedAt_ = std::chrono::steady_clock::now();
+    }
     status_ = newStatus;
     return true;
 }
@@ -141,3 +145,23 @@ bool Job::cancelRequested() const
     return cancelRequested_;
 }
 
+void Job::setTimeout(std::chrono::milliseconds timeout)
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+    timeout_ = timeout;
+}
+
+bool Job::timedOut() const
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (!timeout_.has_value() || !startedAt_.has_value())
+    {
+        return false;
+    }
+
+    const auto elapsed =
+        std::chrono::steady_clock::now() - startedAt_.value();
+
+    return elapsed >= timeout_.value();
+}
