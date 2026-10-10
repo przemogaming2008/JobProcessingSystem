@@ -3,6 +3,7 @@
 #include <cassert>
 #include <chrono>
 #include <thread>
+#include <stdexcept>
 
 int main()
 {
@@ -169,6 +170,53 @@ int main()
 
         assert(manager.status(id) == JobStatus::TimedOut);
         assert(!manager.result(id).has_value());
+    }
+
+    {
+        JobManager manager(1);
+
+        manager.start();
+        manager.stop();
+
+        bool exceptionThrown = false;
+
+        try
+        {
+            manager.submit(
+                JobType::Sleep,
+                JobPriority::Normal,
+                100
+            );
+        }
+        catch (const std::runtime_error&)
+        {
+            exceptionThrown = true;
+        }
+
+        assert(exceptionThrown);
+    }
+
+    {
+        JobManager manager(1);
+
+        manager.start();
+
+        const auto id1 = manager.submit(
+            JobType::Sleep,
+            JobPriority::Normal,
+            50
+        );
+
+        const auto id2 = manager.submit(
+            JobType::Sleep,
+            JobPriority::Normal,
+            50
+        );
+
+        manager.stop();
+
+        assert(manager.status(id1) == JobStatus::Completed);
+        assert(manager.status(id2) == JobStatus::Completed);
     }
     return 0;
 }

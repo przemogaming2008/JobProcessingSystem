@@ -29,7 +29,11 @@ Job::Id JobManager::submit(
     }
 
     jobs_.emplace(id, job);
-    workerPool_.submit(job);
+    if (!workerPool_.submit(job))
+    {
+        jobs_.erase(id);
+        throw std::runtime_error("System is shutting down");
+    }
 
     return id;
 }

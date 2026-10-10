@@ -15,7 +15,7 @@ public:
     explicit WorkerPool(std::size_t workerCount);
 
     void start();
-    void submit(std::shared_ptr<Job> job);
+    bool submit(std::shared_ptr<Job> job);
     void stop();
 
 private:

@@ -15,7 +15,7 @@ public:
         std::function<int(const T&)> getPriority = nullptr
     );
 
-    void push(T value);
+    bool push(T value);
     std::optional<T> waitAndPop();
     void close();
     bool empty() const;
@@ -52,12 +52,17 @@ bool ThreadSafeQueue<T>::empty() const
 }
 
 template <typename T>
-void ThreadSafeQueue<T>::push(T value)
+bool ThreadSafeQueue<T>::push(T value)
 {
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
-        int priority = 1; // domyślnie NORMAL
+        if (closed_)
+        {
+            return false;
+        }
+
+        int priority = 1;
 
         if (getPriority_)
         {
@@ -79,6 +84,7 @@ void ThreadSafeQueue<T>::push(T value)
     }
 
     condition_.notify_one();
+    return true;
 }
 
 template <typename T>
