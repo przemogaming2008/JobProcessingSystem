@@ -1,6 +1,7 @@
 #include "job_system/worker_pool.h"
 #include <utility>
 #include <stdexcept>
+#include <iostream>
 
 WorkerPool::WorkerPool(std::size_t workerCount)
     : queue_(
@@ -18,7 +19,8 @@ WorkerPool::WorkerPool(std::size_t workerCount)
 
             return 1;
         }
-    )
+    ),
+    logger_(std::cout)
 {
     if (workerCount == 0)
     {
@@ -32,7 +34,11 @@ WorkerPool::WorkerPool(std::size_t workerCount)
     for (std::size_t i = 0; i < workerCount; ++i)
     {
         workers_.push_back(
-            std::make_unique<Worker>(queue_)
+            std::make_unique<Worker>(
+                queue_,
+                logger_,
+                i + 1
+            )
         );
     }
 }

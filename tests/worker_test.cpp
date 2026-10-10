@@ -2,12 +2,17 @@
 
 #include <cassert>
 #include <memory>
+#include <sstream>
+#include <string>
 
 int main()
 {
     ThreadSafeQueue<std::shared_ptr<Job>> queue;
 
-    Worker worker(queue);
+    std::ostringstream output;
+    Logger logger(output);
+
+    Worker worker(queue, logger, 1);
 
     worker.start();
 
@@ -23,6 +28,13 @@ int main()
     queue.close();
 
     worker.join();
+
+    const std::string logs = output.str();
+
+    assert(logs.find("worker=1") != std::string::npos);
+    assert(logs.find("job=1") != std::string::npos);
+    assert(logs.find("START") != std::string::npos);
+    assert(logs.find("status=COMPLETED") != std::string::npos);
 
     assert(queue.empty());
 

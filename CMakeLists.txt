@@ -15,6 +15,7 @@ add_library(job_system_lib
     src/worker.cpp
     src/worker_pool.cpp
     src/job_manager.cpp
+    src/logger.cpp
 )
 
 target_include_directories(job_system_lib
@@ -124,4 +125,17 @@ target_link_libraries(job_manager_test
 add_test(
     NAME job_manager_test
     COMMAND job_manager_test
+)
+
+add_executable(logger_test
+    tests/logger_test.cpp
+)
+
+target_link_libraries(logger_test
+    PRIVATE job_system_lib
+)
+
+add_test(
+    NAME logger_test
+    COMMAND logger_test
 )

@@ -1,8 +1,0 @@
-smoke_test 6 0.004552
-job_test 6 0.00455332
-job_executor_test 6 0.00783983
-thread_safe_queue_test 6 0.00387843
-worker_test 6 0.00381322
-worker_pool_test 6 0.0564767
-job_manager_test 6 0.0983765
----
