@@ -58,7 +58,7 @@ int main()
         pool.start();
 
         pool.submit(
-            Job(
+            std::make_shared<Job>(
                 100,
                 JobType::Sleep,
                 JobPriority::Normal,
@@ -67,8 +67,8 @@ int main()
         );
 
         pool.submit(
-            Job(
-                101,
+            std::make_shared<Job>(
+                100,
                 JobType::Sleep,
                 JobPriority::Normal,
                 100

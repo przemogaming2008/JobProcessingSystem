@@ -50,9 +50,23 @@ WorkerPool::~WorkerPool()
 
 void WorkerPool::start()
 {
-    for (auto& worker : workers_)
+    try
     {
-        worker->start();
+        for (auto& worker : workers_)
+        {
+            worker->start();
+        }
+    }
+    catch (...)
+    {
+        queue_.close();
+
+        for (auto& worker : workers_)
+        {
+            worker->join();
+        }
+
+        throw;
     }
 }
 

@@ -21,6 +21,6 @@ public:
 
 private:
     ThreadSafeQueue<std::shared_ptr<Job>> queue_;
-    std::vector<std::unique_ptr<Worker>> workers_;
     Logger logger_;
+    std::vector<std::unique_ptr<Worker>> workers_;
 };
