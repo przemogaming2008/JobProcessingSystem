@@ -4,6 +4,9 @@
 #include <chrono>
 #include <thread>
 #include <stdexcept>
+#include <algorithm>
+#include <mutex>
+#include <vector>
 
 int main()
 {
@@ -217,6 +220,55 @@ int main()
 
         assert(manager.status(id1) == JobStatus::Completed);
         assert(manager.status(id2) == JobStatus::Completed);
+    }
+
+    {
+        JobManager manager(4);
+
+        constexpr int threadCount = 4;
+        constexpr int jobsPerThread = 1000;
+        constexpr int totalJobs = threadCount * jobsPerThread;
+
+        std::vector<Job::Id> ids;
+        ids.reserve(totalJobs);
+
+        std::mutex idsMutex;
+
+        std::vector<std::thread> threads;
+
+        for (int i = 0; i < threadCount; ++i)
+        {
+            threads.emplace_back(
+                [&]()
+                {
+                    for (int j = 0; j < jobsPerThread; ++j)
+                    {
+                        const auto id = manager.submit(
+                            JobType::CalculateSum,
+                            JobPriority::Normal,
+                            10
+                        );
+
+                        std::lock_guard<std::mutex> lock(idsMutex);
+                        ids.push_back(id);
+                    }
+                }
+            );
+        }
+
+        for (auto& thread : threads)
+        {
+            thread.join();
+        }
+
+        assert(ids.size() == totalJobs);
+
+        std::sort(ids.begin(), ids.end());
+
+        for (int i = 0; i < totalJobs; ++i)
+        {
+            assert(ids[i] == static_cast<Job::Id>(i + 1));
+        }
     }
     return 0;
 }

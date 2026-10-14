@@ -10,6 +10,7 @@
 #include <optional>
 #include <string>
 #include <chrono>
+#include <mutex>
 
 class JobManager
 {
@@ -33,6 +34,8 @@ public:
 
     bool cancel(Job::Id id);
 private:
+    mutable std::mutex mutex_;
+
     WorkerPool workerPool_;
     Job::Id nextId_ = 1;
     std::unordered_map<Job::Id, std::shared_ptr<Job>> jobs_;

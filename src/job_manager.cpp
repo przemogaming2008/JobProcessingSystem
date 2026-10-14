@@ -14,7 +14,12 @@ Job::Id JobManager::submit(
     std::optional<std::chrono::milliseconds> timeout
 )
 {
-    const Job::Id id = nextId_++;
+    Job::Id id;
+
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        id = nextId_++;
+    }
 
     auto job = std::make_shared<Job>(
         id,
@@ -28,11 +33,19 @@ Job::Id JobManager::submit(
         job->setTimeout(timeout.value());
     }
 
-    jobs_.emplace(id, job);
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        jobs_.emplace(id, job);
+    }
+
     if (!workerPool_.submit(job))
     {
+        std::lock_guard<std::mutex> lock(mutex_);
         jobs_.erase(id);
-        throw std::runtime_error("System is shutting down");
+
+        throw std::runtime_error(
+            "System is shutting down"
+        );
     }
 
     return id;
@@ -50,48 +63,80 @@ void JobManager::stop()
 
 JobStatus JobManager::status(Job::Id id) const
 {
-    const auto it = jobs_.find(id);
+    std::shared_ptr<Job> job;
 
-    if (it == jobs_.end())
     {
-        throw std::out_of_range("Job not found");
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        const auto it = jobs_.find(id);
+
+        if (it == jobs_.end())
+        {
+            throw std::out_of_range("Job not found");
+        }
+
+        job = it->second;
     }
 
-    return it->second->status();
+    return job->status();
 }
 
 std::optional<std::string> JobManager::result(Job::Id id) const
 {
-    const auto it = jobs_.find(id);
+    std::shared_ptr<Job> job;
 
-    if (it == jobs_.end())
     {
-        throw std::out_of_range("Job not found");
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        const auto it = jobs_.find(id);
+
+        if (it == jobs_.end())
+        {
+            throw std::out_of_range("Job not found");
+        }
+
+        job = it->second;
     }
 
-    return it->second->result();
+    return job->result();
 }
 
 std::optional<std::string> JobManager::error(Job::Id id) const
 {
-    const auto it = jobs_.find(id);
+    std::shared_ptr<Job> job;
 
-    if (it == jobs_.end())
     {
-        throw std::out_of_range("Job not found");
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        const auto it = jobs_.find(id);
+
+        if (it == jobs_.end())
+        {
+            throw std::out_of_range("Job not found");
+        }
+
+        job = it->second;
     }
 
-    return it->second->error();
+    return job->error();
 }
 
 bool JobManager::cancel(Job::Id id)
 {
-    auto it = jobs_.find(id);
+    std::shared_ptr<Job> job;
 
-    if (it == jobs_.end())
     {
-        return false;
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        const auto it = jobs_.find(id);
+
+        if (it == jobs_.end())
+        {
+            return false;
+        }
+
+        job = it->second;
     }
 
-    return it->second->requestCancel();
+    return job->requestCancel();
 }
