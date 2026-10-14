@@ -153,3 +153,17 @@ add_test(
     NAME statistics_test
     COMMAND statistics_test
 )
+
+
+add_executable(producer_consumer_test
+    tests/producer_consumer_test.cpp
+)
+
+target_link_libraries(producer_consumer_test
+    PRIVATE job_system_lib
+)
+
+add_test(
+    NAME producer_consumer_test
+    COMMAND producer_consumer_test
+)
