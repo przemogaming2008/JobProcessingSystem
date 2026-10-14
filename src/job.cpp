@@ -181,6 +181,18 @@ bool Job::complete(std::string result)
         return false;
     }
 
+    if (timeout_.has_value() && startedAt_.has_value())
+    {
+        const auto elapsed =
+            std::chrono::steady_clock::now() - startedAt_.value();
+
+        if (elapsed >= timeout_.value())
+        {
+            status_ = JobStatus::TimedOut;
+            return false;
+        }
+    }
+
     result_ = std::move(result);
     status_ = JobStatus::Completed;
 

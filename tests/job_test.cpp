@@ -111,5 +111,24 @@ int main()
 
         assert(!job.requestCancel());
     }
+
+    {
+        Job job(
+            102,
+            JobType::CalculateSum,
+            JobPriority::Normal,
+            10
+        );
+
+        job.setTimeout(std::chrono::milliseconds(0));
+
+        assert(job.setStatus(JobStatus::Running));
+
+        const bool completed = job.complete("55");
+
+        assert(!completed);
+        assert(job.status() == JobStatus::TimedOut);
+        assert(!job.result().has_value());
+    }
     return 0;
 }
