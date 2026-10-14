@@ -62,6 +62,8 @@ public:
 
     void setTimeout(std::chrono::milliseconds timeout);
     bool timedOut() const;
+
+    bool complete(std::string result);
 private:
     Id id_;
     JobType type_;

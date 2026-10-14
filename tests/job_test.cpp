@@ -73,5 +73,43 @@ int main()
     }
 
     assert(exceptionThrown);
+
+    {
+        Job job(
+            100,
+            JobType::CalculateSum,
+            JobPriority::Normal,
+            10
+        );
+
+        assert(job.setStatus(JobStatus::Running));
+
+        assert(job.requestCancel());
+
+        const bool completed = job.complete("55");
+
+        assert(!completed);
+        assert(job.status() == JobStatus::Cancelled);
+        assert(!job.result().has_value());
+    }
+
+
+    {
+        Job job(
+            101,
+            JobType::CalculateSum,
+            JobPriority::Normal,
+            10
+        );
+
+        assert(job.setStatus(JobStatus::Running));
+
+        assert(job.complete("55"));
+
+        assert(job.status() == JobStatus::Completed);
+        assert(job.result().value() == "55");
+
+        assert(!job.requestCancel());
+    }
     return 0;
 }

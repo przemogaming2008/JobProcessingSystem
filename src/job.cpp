@@ -165,3 +165,24 @@ bool Job::timedOut() const
 
     return elapsed >= timeout_.value();
 }
+
+bool Job::complete(std::string result)
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (status_ != JobStatus::Running)
+    {
+        return false;
+    }
+
+    if (cancelRequested_)
+    {
+        status_ = JobStatus::Cancelled;
+        return false;
+    }
+
+    result_ = std::move(result);
+    status_ = JobStatus::Completed;
+
+    return true;
+}

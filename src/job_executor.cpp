@@ -54,8 +54,7 @@ void JobExecutor::execute(Job& job)
                 return;
             }
 
-            job.setResult(std::to_string(sum));
-            job.setStatus(JobStatus::Completed);
+            job.complete(std::to_string(sum));
             break;
         }
 
@@ -105,8 +104,7 @@ void JobExecutor::execute(Job& job)
                 return;
             }
 
-            job.setResult("Sleep completed");
-            job.setStatus(JobStatus::Completed);
+            job.complete("Sleep completed");
             break;
         }
 
@@ -166,8 +164,7 @@ void JobExecutor::execute(Job& job)
                 return;
             }
 
-            job.setResult(std::to_string(count));
-            job.setStatus(JobStatus::Completed);
+            job.complete(std::to_string(count));
             break;
         }
 
