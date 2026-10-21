@@ -114,6 +114,11 @@ add_test(
     COMMAND worker_pool_test
 )
 
+set_tests_properties(
+    worker_pool_test
+    PROPERTIES TIMEOUT 3
+)
+
 add_executable(job_manager_test
     tests/job_manager_test.cpp
 )

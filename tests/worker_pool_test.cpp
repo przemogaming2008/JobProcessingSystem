@@ -4,6 +4,7 @@
 #include <chrono>
 #include <stdexcept>
 #include <memory>
+#include <thread>
 
 int main()
 {
@@ -83,5 +84,29 @@ int main()
 
     }
 
+    {
+        WorkerPool pool(4);
+
+        pool.start();
+
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(50)
+        );
+
+        const auto start =
+            std::chrono::steady_clock::now();
+
+        pool.stop();
+
+        const auto end =
+            std::chrono::steady_clock::now();
+
+        const auto elapsed =
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                end - start
+            );
+
+        assert(elapsed.count() < 1000);
+    }
     return 0;
 }
