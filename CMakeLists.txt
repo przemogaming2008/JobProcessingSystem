@@ -172,3 +172,21 @@ add_test(
     NAME producer_consumer_test
     COMMAND producer_consumer_test
 )
+
+add_executable(cancellation_timeout_test
+    tests/cancellation_timeout_test.cpp
+)
+
+target_link_libraries(cancellation_timeout_test
+    PRIVATE job_system_lib
+)
+
+add_test(
+    NAME cancellation_timeout_test
+    COMMAND cancellation_timeout_test
+)
+
+set_tests_properties(
+    cancellation_timeout_test
+    PROPERTIES TIMEOUT 5
+)
