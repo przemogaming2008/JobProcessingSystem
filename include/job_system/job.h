@@ -64,6 +64,8 @@ public:
     bool timedOut() const;
 
     bool complete(std::string result);
+
+    std::chrono::steady_clock::time_point queuedAt() const;
 private:
     Id id_;
     JobType type_;
@@ -81,5 +83,7 @@ private:
 
     std::optional<std::chrono::milliseconds> timeout_;
     std::optional<std::chrono::steady_clock::time_point> startedAt_;
+
+    std::chrono::steady_clock::time_point queuedAt_;
 
 };

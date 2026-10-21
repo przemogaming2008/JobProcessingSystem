@@ -45,7 +45,8 @@ int main()
         std::cout << "2. Check status\n";
         std::cout << "3. Get result\n";
         std::cout << "4. Cancel job\n";
-        std::cout << "5. Exit\n";
+        std::cout << "5. Statistics\n";
+        std::cout << "6. Exit\n";
         std::cout << "Choice: ";
 
         int choice = 0;
@@ -221,6 +222,25 @@ int main()
             }
 
             case 5:
+            {
+                const auto& statistics = manager.statistics();
+
+                std::cout << "\n=== Statistics ===\n";
+                std::cout << "Completed: " << statistics.completed() << '\n';
+                std::cout << "Failed: " << statistics.failed() << '\n';
+                std::cout << "Cancelled: " << statistics.cancelled() << '\n';
+                std::cout << "Timed out: " << statistics.timedOut() << '\n';
+                std::cout << "Average wait time: "
+                        << statistics.averageWaitTimeMs()
+                        << " ms\n";
+                std::cout << "Average execution time: "
+                        << statistics.averageExecutionTimeMs()
+                        << " ms\n";
+
+                break;
+            }
+    
+            case 6:
             {
                 std::cout << "Shutting down...\n";
 

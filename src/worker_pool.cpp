@@ -37,6 +37,7 @@ WorkerPool::WorkerPool(std::size_t workerCount)
             std::make_unique<Worker>(
                 queue_,
                 logger_,
+                statistics_,
                 i + 1
             )
         );
@@ -83,4 +84,9 @@ void WorkerPool::stop()
     {
         worker->join();
     }
+}
+
+const Statistics& WorkerPool::statistics() const
+{
+    return statistics_;
 }

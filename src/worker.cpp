@@ -3,10 +3,12 @@
 Worker::Worker(
     ThreadSafeQueue<std::shared_ptr<Job>>& queue,
     Logger& logger,
+    Statistics& statistics,
     std::size_t workerId
 )
     : queue_(queue),
       logger_(logger),
+      statistics_(statistics),
       workerId_(workerId)
 {
 }
@@ -39,11 +41,56 @@ void Worker::run()
             "START"
         );
 
+        const auto executionStart =
+            std::chrono::steady_clock::now();
+
+        const auto waitTime =
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                executionStart - job.value()->queuedAt()
+            );
+
         executor_.execute(*job.value());
+
+        const auto executionEnd =
+            std::chrono::steady_clock::now();
+
+        const auto executionTime =
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                executionEnd - executionStart
+            );
 
         std::string statusText;
 
-        switch (job.value()->status())
+        const auto status = job.value()->status();
+        if (status == JobStatus::Completed)
+        {
+            statistics_.recordCompleted(
+                waitTime,
+                executionTime
+            );
+        }
+        else if (status == JobStatus::Failed)
+        {
+            statistics_.recordFailed(
+                waitTime,
+                executionTime
+            );
+        }
+        else if (status == JobStatus::Cancelled)
+        {
+            statistics_.recordCancelled(
+                waitTime,
+                executionTime
+            );
+        }
+        else if (status == JobStatus::TimedOut)
+        {
+            statistics_.recordTimedOut(
+                waitTime,
+                executionTime
+            );
+        }
+        switch (status)
         {
             case JobStatus::Completed:
                 statusText = "COMPLETED";

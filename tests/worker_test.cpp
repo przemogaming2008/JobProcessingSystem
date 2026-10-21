@@ -12,7 +12,14 @@ int main()
     std::ostringstream output;
     Logger logger(output);
 
-    Worker worker(queue, logger, 1);
+    Statistics statistics;
+
+    Worker worker(
+        queue,
+        logger,
+        statistics,
+        1
+    );
 
     worker.start();
 

@@ -13,7 +13,8 @@ Job::Job(
       status_(JobStatus::Queued),
       priority_(priority),
       created_at_(std::chrono::system_clock::now()),
-      input_(input)
+      input_(input),
+      queuedAt_(std::chrono::steady_clock::now())
 {
     if (id == 0)
     {
@@ -197,4 +198,9 @@ bool Job::complete(std::string result)
     status_ = JobStatus::Completed;
 
     return true;
+}
+
+std::chrono::steady_clock::time_point Job::queuedAt() const
+{
+    return queuedAt_;
 }

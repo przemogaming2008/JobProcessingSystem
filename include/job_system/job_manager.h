@@ -2,6 +2,7 @@
 
 #include "job_system/job.h"
 #include "job_system/worker_pool.h"
+#include "job_system/statistics.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -33,6 +34,8 @@ public:
     std::optional<std::string> error(Job::Id id) const;
 
     bool cancel(Job::Id id);
+
+    const Statistics& statistics() const;
 private:
     mutable std::mutex mutex_;
 

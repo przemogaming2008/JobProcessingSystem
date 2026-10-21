@@ -140,3 +140,8 @@ bool JobManager::cancel(Job::Id id)
 
     return job->requestCancel();
 }
+
+const Statistics& JobManager::statistics() const
+{
+    return workerPool_.statistics();
+}
